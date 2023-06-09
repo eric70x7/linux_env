@@ -1,0 +1,68 @@
+# This is Git's per-user configuration file.
+[user]
+# Please adapt and uncomment the following lines:
+	name = Eric Jones
+	email = eajonese@pm.me
+
+[core]
+	pager = cat
+	autocrlf = input
+	safecrlf = false
+	editor = code --wait
+
+[diff]
+	tool = vscode
+
+[difftool "vscode"]
+	cmd = code -n --wait --diff $LOCAL $REMOTE
+
+[merge]
+	tool = vscode
+
+[mergetool "vscode"]
+	cmd = code --wait $MERGED
+
+[alias]
+# show files
+ ls = ls-files --directory
+
+#
+# status
+#
+	s = status -uno
+	ss = status -uno --short
+
+#
+# diffs
+#
+	d = diff --color-words    # unstaged vs committed
+	ds = diff --staged --color-words # staged vs committed
+	df = diff --name-only
+	dm = diff master --
+	dt = difftool --
+
+#
+# pretty log output
+#
+ lg1 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white). %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
+ lg2 = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''   %C(white)%s%C(reset) %C(bold white). %an%C(reset)' --abbrev-commit
+ lg3 = log --graph --all --abbrev-commit --date=relative --summary --decorate
+ lg3b = log --graph --all --abbrev-commit --date=relative --summary --decorate --simplify-by-decoration --pretty=format:"%d"
+
+ l = "! git lg3 -2 | grep -v \"create mode\" | grep -v \"delete mode\" | grep -v \"mode change\""
+ l4 = "! git lg3 -4 | grep -v \"create mode\" | grep -v \"delete mode\" | grep -v \"mode change\""
+ l8 = "! git lg3 -8 | grep -v \"create mode\" | grep -v \"delete mode\" | grep -v \"mode change\""
+ lall = "! git lg3 | grep -v \"create mode\" | grep -v \"delete mode\" | grep -v \"mode change\""
+ lb = "! git lg3b | grep -v \"create mode\" | grep -v \"delete mode\" | grep -v \"mode change\""
+
+[color]
+	ui = true
+
+[push]
+	default = simple
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
